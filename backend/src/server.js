@@ -1,5 +1,11 @@
 require('dotenv').config();
 
+// Refuse to start without a signing secret
+if (!process.env.JWT_SECRET) {
+  console.error('Error: JWT_SECRET is missing. Add JWT_SECRET to backend/.env');
+  process.exit(1);
+}
+
 const app = require('./app');
 require('./db');
 
