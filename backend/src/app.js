@@ -20,6 +20,9 @@ app.use('/api', apiRouter);
 // Mount the auth routes at /api/auth
 app.use('/api/auth', require('./routes/auth'));
 
+// Mount the services routes at /api/services
+app.use('/api/services', require('./routes/services'));
+
 // JSON 404 handler for unknown routes
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
