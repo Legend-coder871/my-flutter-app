@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 
 import 'package:mobile/providers/auth_provider.dart';
 import 'package:mobile/screens/login_screen.dart';
+import 'package:mobile/screens/my_services_screen.dart';
 import 'package:mobile/screens/register_screen.dart';
+import 'package:mobile/screens/services_screen.dart';
 
 // Root screen with the four main tabs.
 class HomeShell extends StatefulWidget {
@@ -36,6 +38,14 @@ class _HomeShellState extends State<HomeShell> {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => const RegisterScreen()),
+    );
+  }
+
+  // Open the user's own services screen.
+  Future<void> _openMyServices() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const MyServicesScreen()),
     );
   }
 
@@ -83,6 +93,11 @@ class _HomeShellState extends State<HomeShell> {
           Text(user.email),
           Text(user.phone),
           const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: _openMyServices,
+            child: const Text('My services'),
+          ),
+          const SizedBox(height: 16),
           OutlinedButton(
             onPressed: () => context.read<AuthProvider>().logout(),
             child: const Text('Logout'),
@@ -105,7 +120,7 @@ class _HomeShellState extends State<HomeShell> {
       case 3:
         body = _profileTab(auth);
       default:
-        body = const Center(child: Text('Services'));
+        body = const ServicesScreen();
     }
 
     return Scaffold(
