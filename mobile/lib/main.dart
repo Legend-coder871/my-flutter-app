@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mobile/providers/auth_provider.dart';
+import 'package:mobile/providers/items_provider.dart';
 import 'package:mobile/providers/services_provider.dart';
 import 'package:mobile/screens/home_shell.dart';
 
@@ -19,6 +20,7 @@ class StudentMarketplaceApp extends StatelessWidget {
         // Try to restore a saved session as soon as the app starts.
         ChangeNotifierProvider(create: (_) => AuthProvider()..tryAutoLogin()),
         ChangeNotifierProvider(create: (_) => ServicesProvider()),
+        ChangeNotifierProvider(create: (_) => ItemsProvider()),
       ],
       child: MaterialApp(
         title: 'Student Marketplace',

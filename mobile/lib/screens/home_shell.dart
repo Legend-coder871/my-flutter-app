@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import 'package:mobile/providers/auth_provider.dart';
 import 'package:mobile/screens/login_screen.dart';
+import 'package:mobile/screens/market_screen.dart';
+import 'package:mobile/screens/my_items_screen.dart';
 import 'package:mobile/screens/my_services_screen.dart';
 import 'package:mobile/screens/register_screen.dart';
 import 'package:mobile/screens/services_screen.dart';
@@ -46,6 +48,14 @@ class _HomeShellState extends State<HomeShell> {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => const MyServicesScreen()),
+    );
+  }
+
+  // Open the user's own items screen.
+  Future<void> _openMyItems() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const MyItemsScreen()),
     );
   }
 
@@ -97,6 +107,11 @@ class _HomeShellState extends State<HomeShell> {
             onPressed: _openMyServices,
             child: const Text('My services'),
           ),
+          const SizedBox(height: 12),
+          ElevatedButton(
+            onPressed: _openMyItems,
+            child: const Text('My items'),
+          ),
           const SizedBox(height: 16),
           OutlinedButton(
             onPressed: () => context.read<AuthProvider>().logout(),
@@ -114,7 +129,7 @@ class _HomeShellState extends State<HomeShell> {
     final Widget body;
     switch (_index) {
       case 1:
-        body = const Center(child: Text('Market'));
+        body = const MarketScreen();
       case 2:
         body = _bookingsTab(auth);
       case 3:
