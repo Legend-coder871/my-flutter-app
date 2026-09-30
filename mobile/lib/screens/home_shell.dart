@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mobile/providers/auth_provider.dart';
+import 'package:mobile/screens/bookings_screen.dart';
 import 'package:mobile/screens/login_screen.dart';
 import 'package:mobile/screens/market_screen.dart';
 import 'package:mobile/screens/my_items_screen.dart';
@@ -73,7 +74,7 @@ class _HomeShellState extends State<HomeShell> {
         ),
       );
     }
-    return const Center(child: Text('Bookings'));
+    return const BookingsScreen();
   }
 
   // Profile tab content for guests and logged-in users.

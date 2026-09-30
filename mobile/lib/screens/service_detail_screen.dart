@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'package:mobile/models/service.dart';
+import 'package:mobile/providers/auth_provider.dart';
+import 'package:mobile/screens/booking_screen.dart';
+import 'package:mobile/screens/login_screen.dart';
 import 'package:mobile/screens/services_screen.dart';
 
 // Shows the full details of one service.
@@ -20,9 +24,28 @@ class ServiceDetailScreen extends StatelessWidget {
     }
   }
 
+  // Send guests to login, open the booking screen for everyone else.
+  void _book(BuildContext context) {
+    final auth = context.read<AuthProvider>();
+    if (!auth.isLoggedIn) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => BookingScreen(service: service)),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final phone = service.providerPhone;
+    final auth = context.watch<AuthProvider>();
+    // Owners see no booking button on their own service.
+    final isOwner = auth.user != null && auth.user!.id == service.userId;
 
     return Scaffold(
       appBar: AppBar(title: Text(service.title)),
@@ -52,6 +75,13 @@ class ServiceDetailScreen extends StatelessWidget {
                 onPressed: () => _copyPhone(context),
                 icon: const Icon(Icons.copy),
                 label: const Text('Copy phone'),
+              ),
+            const SizedBox(height: 16),
+            if (!isOwner)
+              ElevatedButton.icon(
+                onPressed: () => _book(context),
+                icon: const Icon(Icons.calendar_month),
+                label: const Text('Book appointment'),
               ),
           ],
         ),
