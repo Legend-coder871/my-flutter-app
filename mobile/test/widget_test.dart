@@ -3,9 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile/main.dart';
 
 void main() {
-  testWidgets('shows the app title', (WidgetTester tester) async {
+  testWidgets('connection screen offers a Retry after the check',
+      (WidgetTester tester) async {
     await tester.pumpWidget(const StudentMarketplaceApp());
+    await tester.pumpAndSettle();
 
-    expect(find.text('Student Marketplace'), findsOneWidget);
+    // Tests have no network, so the health check fails and Retry appears.
+    expect(find.text('Retry'), findsOneWidget);
   });
 }
